@@ -21,8 +21,8 @@ class ExporterTest extends WP_UnitTestCase {
 
 		// Create a package with those 2 posts
 		$package = new TM_Content_Package;
-		$package->addPost( $post_id_one );
-		$package->addPost( $post_id_two );
+		$package->add_post( $post_id_one );
+		$package->add_post( $post_id_two );
 
 		// Export the package
 		$exported_package = $package->export();
