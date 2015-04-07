@@ -1,7 +1,6 @@
 <?php
 
 class ExporterTest extends WP_UnitTestCase {
-
 	function testPostExport() {
 		// Create a post
 		$post_id = $this->factory->post->create( array( 'post_title' => 'This is the title' ) );
@@ -15,9 +14,47 @@ class ExporterTest extends WP_UnitTestCase {
 		$this->assertEquals( 'This is the title', $exported_post['post_title'] );
 	}
 
+	function testPackageExport() {
+		// Create 2 posts
+		$post_id_one = $this->factory->post->create( array( 'post_title' => 'ONE' ) );
+		$post_id_two = $this->factory->post->create( array( 'post_title' => 'TWO' ) );
+
+		// Create a package with those 2 posts
+		$package = new TM_Content_Package;
+		$package->addPost( $post_id_one );
+		$package->addPost( $post_id_two );
+
+		// Export the package
+		$exported_package = $package->export();
+
+		// Assert that the 2 posts are in the package
+		$this->assertContains( get_post( $post_id_one, ARRAY_A ), $exported_package['posts'] );
+		$this->assertContains( get_post( $post_id_two, ARRAY_A ), $exported_package['posts'] );
+	}
 }
 
 
 function tm_export_post( $post_id ) {
 	return get_post( $post_id, ARRAY_A );
 }
+
+class TM_Content_Package {
+	protected $posts;
+
+	function __construct() {
+		$this->posts = array();
+	}
+
+	function addPost( $post_id ) {
+		$this->posts[] = get_post( $post_id, ARRAY_A );
+	}
+
+	function export() {
+		$exported_package = array(
+			'posts' => $this->posts
+		);
+
+		return $exported_package;
+	}
+}
+
