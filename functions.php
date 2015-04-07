@@ -329,3 +329,9 @@ add_filter('excerpt_more', 'tesseract_new_excerpt_more');
  */
 
 require get_template_directory() . '/exporter/load.php';
+
+/**
+ * Content Importer
+ */
+
+require get_template_directory() . '/importer/load.php';

@@ -7,6 +7,7 @@ require_once $_tests_dir . '/includes/functions.php';
 
 function _manually_load_files() {
 	require dirname( __FILE__ ) . '/../exporter/load.php';
+	require dirname( __FILE__ ) . '/../importer/load.php';
 }
 tests_add_filter( 'muplugins_loaded', '_manually_load_files' );
 
