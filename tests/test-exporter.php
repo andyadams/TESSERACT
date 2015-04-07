@@ -14,7 +14,7 @@ class ExporterTest extends WP_UnitTestCase {
 		$this->assertEquals( 'This is the title', $exported_post['post_title'] );
 	}
 
-	function testPackageExport() {
+	function testPackagePostExport() {
 		// Create 2 posts
 		$post_id_one = $this->factory->post->create( array( 'post_title' => 'ONE' ) );
 		$post_id_two = $this->factory->post->create( array( 'post_title' => 'TWO' ) );
@@ -32,29 +32,3 @@ class ExporterTest extends WP_UnitTestCase {
 		$this->assertContains( get_post( $post_id_two, ARRAY_A ), $exported_package['posts'] );
 	}
 }
-
-
-function tm_export_post( $post_id ) {
-	return get_post( $post_id, ARRAY_A );
-}
-
-class TM_Content_Package {
-	protected $posts;
-
-	function __construct() {
-		$this->posts = array();
-	}
-
-	function addPost( $post_id ) {
-		$this->posts[] = get_post( $post_id, ARRAY_A );
-	}
-
-	function export() {
-		$exported_package = array(
-			'posts' => $this->posts
-		);
-
-		return $exported_package;
-	}
-}
-
