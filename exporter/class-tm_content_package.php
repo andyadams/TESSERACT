@@ -10,11 +10,11 @@ class TM_Content_Package {
 	}
 
 	public function add_post( $post_array_or_id ) {
-		if ( is_array( $post_array_or_id ) ) {
+		if ( is_array( $post_array_or_id ) ) { // Handles an array of post properties being passed in
 			$post_array = $post_array_or_id;
 			$this->posts[] = $post_array;
 			return true;
-		} elseif ( is_numeric( $post_array_or_id ) ) {
+		} elseif ( is_numeric( $post_array_or_id ) ) { // Loads an existing post from the ID
 			$post_id = $post_array_or_id;
 			$this->posts[] = tm_export_post( $post_id );
 			return true;
@@ -35,9 +35,14 @@ class TM_Content_Package {
 		return $exported_package;
 	}
 
+	/**
+	 * Returns true if all requirements
+	 */
 	public function requirements_met() {
 		if ( ! empty( $this->required_plugins ) ) {
-			return empty( $this->missing_plugins() ) && empty( $this->inactive_required_plugins() );
+			// If there are no missing plugins and all required plugins are activated, we're good.
+			return empty( $this->missing_plugins() )
+				&& empty( $this->inactive_required_plugins() );
 		}
 
 		return true;
