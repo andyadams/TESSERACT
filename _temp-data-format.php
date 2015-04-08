@@ -23,9 +23,6 @@ array(
 			'value' => 'option_value'
 		)
 	),
-	// 'terms' => array(),
-	// 'term_taxonomy' => array(),
-	// 'term_relationships' => array(),
 	'requirements' => array(
 		'theme' => 'TESSERACT',
 		'theme_version_min' => 0,
@@ -34,7 +31,10 @@ array(
 			'woocommerce' => array(
 				'source' => 'wp.org'
 			),
-			''
 		)
+	),
+	'info' => array(
+		'title' => 'Package title',
+		'description' => 'Description goes here'
 	)
 );

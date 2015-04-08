@@ -41,7 +41,8 @@ class TM_Content_Package {
 	public function requirements_met() {
 		if ( ! empty( $this->required_plugins ) ) {
 			// If there are no missing plugins and all required plugins are activated, we're good.
-			return empty( $this->missing_plugins() )
+			return
+				empty( $this->missing_plugins() )
 				&& empty( $this->inactive_required_plugins() );
 		}
 
@@ -73,7 +74,7 @@ class TM_Content_Package {
 		$inactive_plugins = array();
 
 		foreach ( $this->required_plugins as $required_plugin ) {
-			// If the required plugin isn't in the list of installed plugins
+			// If the required plugin isn't in the list of active plugins
 			if ( ! in_array( $required_plugin, $active_plugins ) ) {
 				$inactive_plugins[] = $required_plugin;
 			}
