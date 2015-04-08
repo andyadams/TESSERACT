@@ -325,12 +325,6 @@ function tesseract_new_excerpt_more($more) {
 add_filter('excerpt_more', 'tesseract_new_excerpt_more');
 
 /**
- * Content Exporter (probably will be removed eventually)
- */
-
-require get_template_directory() . '/exporter/load.php';
-
-/**
  * Content Importer
  */
 
