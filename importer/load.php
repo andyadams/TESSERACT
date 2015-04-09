@@ -1,3 +1,4 @@
 <?php
 
-require 'import_functions.php';
+require 'import-functions.php';
+require 'admin-page.php';
