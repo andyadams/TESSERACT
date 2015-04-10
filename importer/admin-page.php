@@ -7,7 +7,7 @@ function tesseract_add_admin_menu() {
 add_action( 'admin_menu', 'tesseract_add_admin_menu' );
 
 function tesseract_display_admin_page() {
-	load_template( dirname( __FILE__ ) . '/templates/admin-page.php' );
+	load_template( dirname( __FILE__ ) . '/templates/importer-home.php' );
 }
 
 function tesseract_handle_package_import() {
