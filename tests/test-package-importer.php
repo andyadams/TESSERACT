@@ -14,7 +14,7 @@ class PackageImporterTest extends WP_UnitTestCase {
 		$this->assertEmpty( $post );
 
 		// Import the package
-		tm_import_package( $package->export() );
+		tesseract_import_package( $package->export() );
 
 		// Assert those 2 posts are in the DB
 		$post = get_page_by_title( 'One Title!', OBJECT, 'post' );

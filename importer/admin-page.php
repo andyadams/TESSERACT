@@ -7,16 +7,60 @@ function tesseract_add_admin_menu() {
 add_action( 'admin_menu', 'tesseract_add_admin_menu' );
 
 function tesseract_display_admin_page() {
-	load_template( dirname( __FILE__ ) . '/templates/importer-home.php' );
+	if ( isset( $_REQUEST['import_package'] ) ) {
+		load_template( dirname( __FILE__ ) . '/templates/importer-display-import.php' );
+	} else {
+		load_template( dirname( __FILE__ ) . '/templates/importer-home.php' );
+	}
 }
 
 function tesseract_handle_package_import() {
 	$nonce = $_REQUEST['_wpnonce'];
-	if ( isset( $_REQUEST['import_package'] ) && wp_verify_nonce( $nonce, 'tesseract_import_package' ) ) {
+	if ( isset( $_REQUEST['import_package'] ) && wp_verify_nonce( $nonce, 'tesseract_import_package' ) && $_POST['package'] ) {
 		$packages = tesseract_get_packages();
-		tm_import_package( $packages[$_POST['package']] );
-		echo "Imported Package #{$_POST['package']}";
+		$package_id = intval( $_POST['package'] );
+
+		if ( empty( $packages[$package_id] ) ) {
+			tesseract_add_error_message( "Error: Invalid package. Try another?" );
+			return;
+		}
+
+		$result = tesseract_import_package( $packages[$package_id] );
+
+		if ( is_wp_error( $result ) ) {
+			tesseract_add_error_message( "Error: Package import was incomplete: " . $result->get_error_message() );
+		} else {
+			tesseract_add_success_message( "Success! Imported Package $package_id." );
+		}
 	}
 }
 
 add_action( 'admin_init', 'tesseract_handle_package_import' );
+
+function tesseract_add_error_message( $message ) {
+	global $tesseract_messages;
+
+	if ( empty( $tesseract_messages ) ) {
+		$tesseract_messages = array();
+	}
+
+	if ( empty( $tesseract_messages['error'] ) ) {
+		$tesseract_messages['error'] = array();
+	}
+
+	$tesseract_messages['error'][] = $message;
+}
+
+function tesseract_add_success_message( $message ) {
+	global $tesseract_messages;
+
+	if ( empty( $tesseract_messages ) ) {
+		$tesseract_messages = array();
+	}
+
+	if ( empty( $tesseract_messages['error'] ) ) {
+		$tesseract_messages['success'] = array();
+	}
+
+	$tesseract_messages['success'][] = $message;
+}
