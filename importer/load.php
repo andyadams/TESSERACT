@@ -15,5 +15,5 @@ function tesseract_get_packages() {
 }
 
 function tesseract_import_package_url( $package_id ) {
-	return wp_nonce_url( admin_url( 'admin.php?page=tesseract-importer&import_package=' . intval( $package_id ) ), 'tesseract_import_package' );
+	return admin_url( 'admin.php?page=tesseract-importer&import_package=' . intval( $package_id ) );
 }
