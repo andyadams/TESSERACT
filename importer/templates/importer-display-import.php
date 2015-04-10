@@ -30,5 +30,8 @@
 				<?php endforeach; ?>
 			</ul>
 		<?php endif; ?>
+		<?php if ( ! empty( $tesseract_import_result['options'] ) ) : ?>
+			<h3>Your settings were also updated.</h3>
+		<?php endif; ?>
 	<?php endif; ?>
 </div>

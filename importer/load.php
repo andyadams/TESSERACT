@@ -3,6 +3,10 @@
 require 'import-functions.php';
 require 'admin-page.php';
 
+if ( ! defined( 'TESSERACT_PACKAGE_LIST_URL' ) ) {
+	define( 'TESSERACT_PACKAGE_LIST_URL', 'http://wpmakr.com/api/package/list' );
+}
+
 function tesseract_enqueue_importer_scripts() {
 	global $pagenow;
 
@@ -14,10 +18,12 @@ function tesseract_enqueue_importer_scripts() {
 add_action( 'admin_enqueue_scripts', 'tesseract_enqueue_importer_scripts' );
 
 function tesseract_get_packages() {
-	define( 'TESSERACT_PACKAGE_LIST_URL', 'http://tylermoore.dev/api/package/list' );
-
-	$content = file_get_contents( dirname( __FILE__ ) . '/data/packages.json' );
 	$content = file_get_contents( TESSERACT_PACKAGE_LIST_URL );
+
+	if ( false === $content ) {
+		$content = file_get_contents( dirname( __FILE__ ) . '/data/packages.json' );
+	}
+
 	$data = json_decode( $content, true );
 	$packages = $data['data']['packages'];
 
