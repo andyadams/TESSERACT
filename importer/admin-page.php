@@ -30,6 +30,8 @@ function tesseract_handle_package_import() {
 		if ( is_wp_error( $result ) ) {
 			tesseract_add_error_message( "Error: Package import was incomplete: " . $result->get_error_message() );
 		} else {
+			global $tesseract_import_result;
+			$tesseract_import_result = $result;
 			tesseract_add_success_message( "Success! Imported Package $package_id." );
 		}
 	}
@@ -63,4 +65,22 @@ function tesseract_add_success_message( $message ) {
 	}
 
 	$tesseract_messages['success'][] = $message;
+}
+
+function tesseract_has_error_messages() {
+	return ! empty( tesseract_get_messages( 'error' ) );
+}
+
+function tesseract_has_success_messages() {
+	return ! empty( tesseract_get_messages( 'success' ) );
+}
+
+function tesseract_get_messages( $key ) {
+	global $tesseract_messages;
+
+	if ( empty( $tesseract_messages ) || empty( $tesseract_messages[$key] ) ) {
+		return array();
+	} else {
+		return $tesseract_messages[$key];
+	}
 }
