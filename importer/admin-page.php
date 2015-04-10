@@ -14,8 +14,8 @@ function tesseract_handle_package_import() {
 	$nonce = $_REQUEST['_wpnonce'];
 	if ( isset( $_REQUEST['import_package'] ) && wp_verify_nonce( $nonce, 'tesseract_import_package' ) ) {
 		$packages = tesseract_get_packages();
-		tm_import_package( $packages[$_REQUEST['import_package']] );
-		echo "Imported Package #{$_REQUEST['import_package']}";
+		tm_import_package( $packages[$_POST['package']] );
+		echo "Imported Package #{$_POST['package']}";
 	}
 }
 
