@@ -68,11 +68,13 @@ function tesseract_add_success_message( $message ) {
 }
 
 function tesseract_has_error_messages() {
-	return ! empty( tesseract_get_messages( 'error' ) );
+	$messages = tesseract_get_messages( 'error' );
+	return ! empty( $messages );
 }
 
 function tesseract_has_success_messages() {
-	return ! empty( tesseract_get_messages( 'success' ) );
+	$messages = tesseract_get_messages( 'success' );
+	return ! empty( $messages );
 }
 
 function tesseract_get_messages( $key ) {
