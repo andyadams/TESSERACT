@@ -4,4 +4,6 @@
 	<?php foreach ( $packages as $package ) : ?>
 		<?php include( locate_template( 'importer/templates/partials/_package-display.php' ) ); ?>
 	<?php endforeach; ?>
+
+	<?php echo TGM_Plugin_Activation::notices(); ?>
 </div>

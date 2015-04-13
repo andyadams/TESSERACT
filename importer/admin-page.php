@@ -9,6 +9,8 @@ add_action( 'admin_menu', 'tesseract_add_admin_menu' );
 function tesseract_display_admin_page() {
 	if ( isset( $_REQUEST['import_package'] ) ) {
 		load_template( dirname( __FILE__ ) . '/templates/importer-display-import.php' );
+	} elseif ( isset( $_REQUEST['importer_plugin_install'] ) ) {
+		load_template( dirname( __FILE__ ) . '/templates/importer-plugin-install.php' );
 	} else {
 		load_template( dirname( __FILE__ ) . '/templates/importer-home.php' );
 	}
