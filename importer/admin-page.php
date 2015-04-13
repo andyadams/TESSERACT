@@ -7,13 +7,21 @@ function tesseract_add_admin_menu() {
 add_action( 'admin_menu', 'tesseract_add_admin_menu' );
 
 function tesseract_display_admin_page() {
-	if ( isset( $_REQUEST['import_package'] ) ) {
+	if ( tesseract_is_import_package_page() ) {
 		load_template( dirname( __FILE__ ) . '/templates/importer-display-import.php' );
-	} elseif ( isset( $_REQUEST['importer_plugin_install'] ) ) {
+	} elseif ( tesseract_is_plugin_install_page() ) {
 		load_template( dirname( __FILE__ ) . '/templates/importer-plugin-install.php' );
 	} else {
 		load_template( dirname( __FILE__ ) . '/templates/importer-home.php' );
 	}
+}
+
+function tesseract_is_import_package_page() {
+	return $_GET['page'] == 'tesseract-importer' && isset( $_REQUEST['import_package'] );
+}
+
+function tesseract_is_plugin_install_page() {
+	return $_GET['page'] == 'tesseract-importer' && isset( $_REQUEST['importer_plugin_install'] );
 }
 
 function tesseract_handle_package_import() {
@@ -25,6 +33,10 @@ function tesseract_handle_package_import() {
 		if ( empty( $packages[$package_id] ) ) {
 			tesseract_add_error_message( "Error: Invalid package. Try another?" );
 			return;
+		}
+
+		if ( tesseract_needs_plugins_installed() ) {
+			wp_redirect( tesseract_get_plugin_install_url( $package_id ) );
 		}
 
 		$result = tesseract_import_package( $packages[$package_id] );
@@ -40,6 +52,16 @@ function tesseract_handle_package_import() {
 }
 
 add_action( 'admin_init', 'tesseract_handle_package_import' );
+
+function tesseract_needs_plugins_installed() {
+	ob_start();
+	$activator = TGM_Plugin_Activation::get_instance();
+	$activator->notices();
+	$messages = ob_get_contents();
+	ob_end_clean();
+
+	return ! empty( $messages );
+}
 
 function tesseract_add_error_message( $message ) {
 	global $tesseract_messages;
