@@ -30,5 +30,7 @@ function tesseract_import_package( $package_array ) {
 		}
 	}
 
+	delete_option( 'tesseract_required_plugins' );
+
 	return $results;
 }

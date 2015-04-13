@@ -13,9 +13,9 @@ function tesseract_register_required_plugins() {
 			'dismissable'  => false,					// If false, a user cannot dismiss the nag message.
 			'is_automatic' => true,				   // Automatically activate plugins after installation or not.
 			'strings'	   => array(
-				'notice_can_install_required'	  => _n_noop( 'This package requires the following plugin: %1$s.', 'This theme requires the following plugins: %1$s.' ), // %1$s = plugin name(s).
-				'notice_can_install_recommended'  => _n_noop( 'This package recommends the following plugin: %1$s.', 'This theme recommends the following plugins: %1$s.' ), // %1$s = plugin name(s).
-				'complete'						  => __( 'All plugins installed and activated successfully. <a href="/wp-admin/admin.php?page=tesseract-importer">Return to the content Importer</a>.', 'tgmpa' ), // %s = dashboard link.
+				'notice_can_install_required'	  => _n_noop( 'This package requires the following plugin: %1$s.', 'This theme requires the following plugins: %1$s.' ),
+				'notice_can_install_recommended'  => _n_noop( 'This package recommends the following plugin: %1$s.', 'This theme recommends the following plugins: %1$s.' ),
+				'complete'						  => __( 'All plugins installed and activated successfully. <a href="/wp-admin/admin.php?page=tesseract-importer">Return to the content importer</a>.', 'tgmpa' ), // %s = dashboard link.
 			)
 		);
 
