@@ -3,5 +3,6 @@
 	<?php
 		$activator = TGM_Plugin_Activation::get_instance();
 		$activator->notices();
+		$activator->install_plugins_page();
 	?>
 </div>

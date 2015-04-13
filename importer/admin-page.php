@@ -25,8 +25,7 @@ function tesseract_is_plugin_install_page() {
 }
 
 function tesseract_handle_package_import() {
-	$nonce = $_REQUEST['_wpnonce'];
-	if ( isset( $_REQUEST['import_package'] ) && wp_verify_nonce( $nonce, 'tesseract_import_package' ) && $_POST['package'] ) {
+	if ( tesseract_is_valid_package_import() ) {
 		$packages = tesseract_get_packages();
 		$package_id = intval( $_POST['package'] );
 
@@ -52,6 +51,37 @@ function tesseract_handle_package_import() {
 }
 
 add_action( 'admin_init', 'tesseract_handle_package_import' );
+
+function tesseract_is_valid_package_import() {
+	$nonce = $_REQUEST['_wpnonce'];
+	return isset( $_REQUEST['import_package'] ) && wp_verify_nonce( $nonce, 'tesseract_import_package' ) && $_POST['package'];
+}
+
+function tesseract_check_plugin_requirements() {
+	if ( tesseract_is_import_package_page() ) {
+		if ( tesseract_is_valid_package_import() ) {
+			$package_id = intval( $_POST['package'] );
+			$packages = tesseract_get_packages();
+
+			$required_plugins = array();
+
+			if ( isset( $packages[$package_id]['required_plugins'] ) ) {
+				foreach ( $packages[$package_id]['required_plugins'] as $required_plugin ) {
+					$required_plugins[] = array(
+						'name' => $required_plugin['name'],
+						'slug' => $required_plugin['slug'],
+						'required' => true
+					);
+				}
+			}
+
+
+			update_option( 'tesseract_required_plugins', $required_plugins );
+		}
+	}
+}
+
+add_action( 'init', 'tesseract_check_plugin_requirements', 2 );
 
 function tesseract_needs_plugins_installed() {
 	ob_start();
