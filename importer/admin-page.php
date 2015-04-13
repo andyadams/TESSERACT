@@ -16,14 +16,6 @@ function tesseract_display_admin_page() {
 	}
 }
 
-function tesseract_is_import_package_page() {
-	return $_GET['page'] == 'tesseract-importer' && isset( $_REQUEST['import_package'] );
-}
-
-function tesseract_is_plugin_install_page() {
-	return $_GET['page'] == 'tesseract-importer' && isset( $_REQUEST['importer_plugin_install'] );
-}
-
 function tesseract_handle_package_import() {
 	if ( tesseract_is_valid_package_import() ) {
 		$packages = tesseract_get_packages();
@@ -51,92 +43,3 @@ function tesseract_handle_package_import() {
 }
 
 add_action( 'admin_init', 'tesseract_handle_package_import' );
-
-function tesseract_is_valid_package_import() {
-	$nonce = $_REQUEST['_wpnonce'];
-	return isset( $_REQUEST['import_package'] ) && wp_verify_nonce( $nonce, 'tesseract_import_package' ) && $_POST['package'];
-}
-
-function tesseract_check_plugin_requirements() {
-	if ( tesseract_is_import_package_page() ) {
-		if ( tesseract_is_valid_package_import() ) {
-			$package_id = intval( $_POST['package'] );
-			$packages = tesseract_get_packages();
-
-			$required_plugins = array();
-
-			if ( isset( $packages[$package_id]['required_plugins'] ) ) {
-				foreach ( $packages[$package_id]['required_plugins'] as $required_plugin ) {
-					$required_plugins[] = array(
-						'name' => $required_plugin['name'],
-						'slug' => $required_plugin['slug'],
-						'required' => true
-					);
-				}
-			}
-
-
-			update_option( 'tesseract_required_plugins', $required_plugins );
-		}
-	}
-}
-
-add_action( 'init', 'tesseract_check_plugin_requirements', 2 );
-
-function tesseract_needs_plugins_installed() {
-	ob_start();
-	$activator = TGM_Plugin_Activation::get_instance();
-	$activator->notices();
-	$messages = ob_get_contents();
-	ob_end_clean();
-
-	return ! empty( $messages );
-}
-
-function tesseract_add_error_message( $message ) {
-	global $tesseract_messages;
-
-	if ( empty( $tesseract_messages ) ) {
-		$tesseract_messages = array();
-	}
-
-	if ( empty( $tesseract_messages['error'] ) ) {
-		$tesseract_messages['error'] = array();
-	}
-
-	$tesseract_messages['error'][] = $message;
-}
-
-function tesseract_add_success_message( $message ) {
-	global $tesseract_messages;
-
-	if ( empty( $tesseract_messages ) ) {
-		$tesseract_messages = array();
-	}
-
-	if ( empty( $tesseract_messages['error'] ) ) {
-		$tesseract_messages['success'] = array();
-	}
-
-	$tesseract_messages['success'][] = $message;
-}
-
-function tesseract_has_error_messages() {
-	$messages = tesseract_get_messages( 'error' );
-	return ! empty( $messages );
-}
-
-function tesseract_has_success_messages() {
-	$messages = tesseract_get_messages( 'success' );
-	return ! empty( $messages );
-}
-
-function tesseract_get_messages( $key ) {
-	global $tesseract_messages;
-
-	if ( empty( $tesseract_messages ) || empty( $tesseract_messages[$key] ) ) {
-		return array();
-	} else {
-		return $tesseract_messages[$key];
-	}
-}
