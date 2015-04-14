@@ -4,13 +4,25 @@
  */
 
 function tesseract_get_packages() {
-	$content = file_get_contents( TESSERACT_PACKAGE_LIST_URL );
+	$response = wp_remote_get( TESSERACT_PACKAGE_LIST_URL );
+	$content = $response['body'];
 
 	if ( false === $content ) {
 		$content = file_get_contents( dirname( __FILE__ ) . '/data/packages.json' );
 	}
 
+	if ( empty( $content ) ) {
+		tesseract_add_error_message( 'There was an error fetching the packages.' );
+		return array();
+	}
+
 	$data = json_decode( $content, true );
+
+	if ( NULL === $data ) {
+		tesseract_add_error_message( 'There was an error decoding the packages.' );
+		return array();
+	}
+
 	$packages = $data['data']['packages'];
 
 	return $packages;
