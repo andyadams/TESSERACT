@@ -7,7 +7,9 @@
   margin-right: 10px;
   margin-bottom: 10px;
   background: #fff;
-  padding-top: 10px; }
+  padding-top: 10px;
+  padding-bottom: 30px;
+  position: relative; }
   #wpbody-content .wrap .package .image {
     width: 150px;
     height: 150px;
@@ -31,6 +33,10 @@
       margin-bottom: 10px; }
     #wpbody-content .wrap .package .content .description {
       margin-bottom: 10px; }
+  #wpbody-content .wrap .package .submit-button {
+    position: absolute;
+    bottom: 10px;
+    left: 10px; }
 #wpbody-content .wrap .tm-messages li {
   padding: 15px;
   margin-bottom: 20px;

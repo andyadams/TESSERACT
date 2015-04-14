@@ -10,6 +10,8 @@
 		margin-bottom: 10px;
 		background: #fff;
 		padding-top: 10px;
+		padding-bottom: 30px;
+		position: relative;
 		.image {
 			width: 150px;
 			height: 150px;
@@ -38,6 +40,11 @@
 			.description {
 				margin-bottom: 10px;
 			}
+		}
+		.submit-button {
+			position: absolute;
+			bottom: 10px;
+			left: 10px;
 		}
 	}
 	.tm-messages {

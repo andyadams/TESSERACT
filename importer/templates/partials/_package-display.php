@@ -26,9 +26,9 @@
 					?>
 				</div>
 			<?php endif; ?>
-			<input type="submit" class="button button-secondary" value="Import This Package">
 		</div>
 
+		<input type="submit" class="submit-button button button-secondary" value="Import This Package">
 		<?php wp_nonce_field( 'tesseract_import_package' ); ?>
 		<input type="hidden" name="package" value="<?php echo esc_attr( $package['id'] ); ?>">
 	</form>
