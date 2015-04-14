@@ -28,6 +28,7 @@ function tesseract_handle_package_import() {
 
 		if ( tesseract_needs_plugins_installed() ) {
 			wp_redirect( tesseract_get_plugin_install_url( $package_id ) );
+			exit;
 		}
 
 		$result = tesseract_import_package( $packages[$package_id] );
@@ -37,7 +38,7 @@ function tesseract_handle_package_import() {
 		} else {
 			global $tesseract_import_result;
 			$tesseract_import_result = $result;
-			tesseract_add_success_message( "Success! Imported Package $package_id." );
+			tesseract_add_success_message( "Success! Imported '{$packages[$package_id]['name']}' Package." );
 		}
 	}
 }
