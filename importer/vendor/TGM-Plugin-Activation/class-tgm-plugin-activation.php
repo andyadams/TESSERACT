@@ -1646,6 +1646,8 @@ if ( ! class_exists( 'TGMPA_List_Table' ) ) {
                 update_option( 'recently_activated', $recent );
 
                 unset( $_POST ); // Reset the $_POST variable in case user wants to perform one action after another.
+
+				do_action( 'tesseract_tgmpa_after_bulk_activate' );
             }
         }
 

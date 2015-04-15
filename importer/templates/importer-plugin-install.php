@@ -2,8 +2,6 @@
 	<?php include( locate_template( 'importer/templates/partials/_messages.php' ) ); ?>
 
 	<?php
-		$activator = TGM_Plugin_Activation::get_instance();
-		$activator->notices();
 		$plugin_table = new TGMPA_List_Table;
 		$plugin_table->prepare_items();
 
@@ -45,7 +43,7 @@
 		<?php if ( ! empty( $plugins_needing_install ) ) : ?>
 			<h3>These plugins need to be installed:</h3>
 			<form id="tgmpa-plugins" action="/wp-admin/themes.php?page=tgmpa-install-plugins" method="post">
-				<ul>
+				<ol class="required-plugin-list">
 					<?php foreach ( $plugins_needing_install as $item ) : ?>
 						<li>
 							<?php echo esc_html( $item['sanitized_plugin'] ); ?>
@@ -55,7 +53,7 @@
 							?>
 						</li>
 					<?php endforeach; ?>
-				</ul>
+				</ol>
 				<input type="hidden" name="action" value="tgmpa-bulk-install">
 				<?php wp_nonce_field( 'bulk-plugins' ); ?>
 				<input type="submit" value="Install These Plugins">
@@ -65,7 +63,7 @@
 		<?php if ( ! empty( $plugins_needing_activation ) ) : ?>
 			<h3>These plugins need to be activated:</h3>
 			<form id="tgmpa-plugins" action="/wp-admin/themes.php?page=tgmpa-install-plugins" method="post">
-				<ul>
+				<ol class="required-plugin-list">
 					<?php foreach ( $plugins_needing_activation as $item ) : ?>
 						<li>
 							<?php echo esc_html( $item['sanitized_plugin'] ); ?>
@@ -75,7 +73,7 @@
 							?>
 						</li>
 					<?php endforeach; ?>
-				</ul>
+				</ol>
 				<input type="hidden" name="action" value="tgmpa-bulk-activate">
 				<?php wp_nonce_field( 'bulk-plugins' ); ?>
 				<input type="submit" value="Activate These Plugins">

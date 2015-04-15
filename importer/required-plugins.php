@@ -74,3 +74,20 @@ function tesseract_needs_plugins_installed() {
 
 	return ! empty( $messages );
 }
+
+/**
+ * Super hacky workaround to the fact that TGMPA does processing after headers are sent.
+ */
+function tesseract_redirect_after_activation() {
+	$return_url = get_option( 'tesseract_plugin_install_return_url' );
+
+	if ( ! empty( $return_url ) ) {
+		?>
+		<script type="text/javascript">
+			window.location.replace(<?php echo json_encode( $return_url ) ?>);
+		</script>
+		<?php
+	}
+}
+
+add_action( 'tesseract_tgmpa_after_bulk_activate', 'tesseract_redirect_after_activation' );
