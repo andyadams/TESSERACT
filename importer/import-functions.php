@@ -30,6 +30,8 @@ function tesseract_import_package( $package_array ) {
 		}
 	}
 
+	// Clear out the option for 'required plugins', because the package has completed importing.
+	// All plugins should have been installed/activated by now.
 	delete_option( 'tesseract_required_plugins' );
 
 	return $results;

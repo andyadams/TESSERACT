@@ -16,6 +16,7 @@ function tesseract_register_required_plugins() {
 				'notice_can_install_required'	  => _n_noop( 'This package requires the following plugin: %1$s.', 'This package requires the following plugins: %1$s.' ),
 				'notice_can_install_recommended'  => _n_noop( 'This package recommends the following plugin: %1$s.', 'This package recommends the following plugins: %1$s.' ),
 				'complete'						  => __( 'All plugins installed and activated successfully. <a href="/wp-admin/admin.php?page=tesseract-importer">Return to the content importer</a>.', 'tgmpa' ), // %s = dashboard link.
+				'return' => "Continue importing your package"
 			)
 		);
 
