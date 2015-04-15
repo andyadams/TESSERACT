@@ -10,6 +10,7 @@ function tesseract_display_admin_page() {
 	if ( tesseract_is_import_package_page() ) {
 		load_template( dirname( __FILE__ ) . '/templates/importer-display-import.php' );
 	} elseif ( tesseract_is_plugin_install_page() ) {
+		update_option( 'tesseract_plugin_install_return_url', tesseract_get_plugin_install_url( $_GET['package'] ) );
 		load_template( dirname( __FILE__ ) . '/templates/importer-plugin-install.php' );
 	} else {
 		load_template( dirname( __FILE__ ) . '/templates/importer-home.php' );

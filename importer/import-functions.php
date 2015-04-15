@@ -34,6 +34,7 @@ function tesseract_import_package( $package_array ) {
 	// Clear out the option for 'required plugins', because the package has completed importing.
 	// All plugins should have been installed/activated by now.
 	delete_option( 'tesseract_required_plugins' );
+	delete_option( 'tesseract_plugin_install_return_url' );
 
 	update_option( 'tesseract_imported_package_' . intval( $package_array['id'] ), 1 );
 
