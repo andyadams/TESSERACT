@@ -27,12 +27,12 @@
 		<h2>Awesome! You've installed all required plugins. Continue with the import?</h2>
 
 		<form action="<?php echo esc_url( tesseract_get_import_package_url() ); ?>" method="post" class="package-form" data-num-pages="<?php echo esc_attr( count( $package['posts'] ) ); ?>">
-			<input type="submit" class="submit-button button button-secondary" value="Yep, continue with the import!">
+			<input type="submit" class="submit-button button button-primary" value="Yep, continue with the import!">
 			<?php wp_nonce_field( 'tesseract_import_package' ); ?>
 			<input type="hidden" name="package" value="<?php echo esc_attr( $package['id'] ); ?>">
 		</form>
 		<p>
-			<a href="<?php echo esc_url( tesseract_get_import_home_url() ); ?>">
+			<a href="<?php echo esc_url( tesseract_get_import_home_url() ); ?>" class="button button-secondary">
 				Actually, no. Take me back to the importer home page.
 			</a>
 		</p>
@@ -56,7 +56,7 @@
 				</ol>
 				<input type="hidden" name="action" value="tgmpa-bulk-install">
 				<?php wp_nonce_field( 'bulk-plugins' ); ?>
-				<input type="submit" value="Install These Plugins">
+				<input type="submit" value="Install These Plugins" class="button button-primary">
 			</form>
 		<?php endif; ?>
 
@@ -76,7 +76,7 @@
 				</ol>
 				<input type="hidden" name="action" value="tgmpa-bulk-activate">
 				<?php wp_nonce_field( 'bulk-plugins' ); ?>
-				<input type="submit" value="Activate These Plugins">
+				<input type="submit" value="Activate These Plugins" class="button button-primary">
 			</form>
 		<?php endif; ?>
 	<?php endif; ?>

@@ -1586,6 +1586,7 @@ if ( ! class_exists( 'TGMPA_List_Table' ) ) {
                     $installer->bulk_install( $sources );
                 echo '</div>';
 
+				do_action( 'tesseract_tgmpa_after_bulk_install' );
                 return true;
             }
 

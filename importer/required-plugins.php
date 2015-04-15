@@ -90,4 +90,5 @@ function tesseract_redirect_after_activation() {
 	}
 }
 
+add_action( 'tesseract_tgmpa_after_bulk_install', 'tesseract_redirect_after_activation' );
 add_action( 'tesseract_tgmpa_after_bulk_activate', 'tesseract_redirect_after_activation' );
