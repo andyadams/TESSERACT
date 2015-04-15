@@ -37,6 +37,10 @@
     position: absolute;
     bottom: 10px;
     left: 10px; }
+  #wpbody-content .wrap .package .already-imported {
+    font-size: 10px;
+    color: #3c763d;
+    margin-bottom: 10px; }
 #wpbody-content .wrap .tm-messages li {
   padding: 15px;
   margin-bottom: 20px;

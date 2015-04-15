@@ -26,8 +26,14 @@
 					?>
 				</div>
 			<?php endif; ?>
-		</div>
 
+			<?php $already_imported = get_option( 'tesseract_imported_package_' . intval( $package['id'] ) ); ?>
+			<?php if ( ! empty( $already_imported ) ) : ?>
+				<div class="already-imported">
+					You've imported this package before
+				</div>
+			<?php endif; ?>
+		</div>
 		<input type="submit" class="submit-button button button-secondary" value="Import This Package">
 		<?php wp_nonce_field( 'tesseract_import_package' ); ?>
 		<input type="hidden" name="package" value="<?php echo esc_attr( $package['id'] ); ?>">
