@@ -1,5 +1,9 @@
 <?php
 
+function tesseract_get_import_home_url() {
+	return admin_url( 'admin.php?page=tesseract-importer' );
+}
+
 function tesseract_get_import_package_url() {
 	return admin_url( 'admin.php?page=tesseract-importer&import_package=1' );
 }

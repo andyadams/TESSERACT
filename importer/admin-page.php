@@ -36,11 +36,31 @@ function tesseract_handle_package_import() {
 		if ( is_wp_error( $result ) ) {
 			tesseract_add_error_message( "Error: Package import was incomplete: " . $result->get_error_message() );
 		} else {
-			global $tesseract_import_result;
-			$tesseract_import_result = $result;
-			tesseract_add_success_message( "Success! Imported '{$packages[$package_id]['name']}' Package." );
+			update_option( 'tesseract_import_result', $result );
+			wp_redirect( tesseract_get_import_package_url() );
+			exit;
 		}
 	}
 }
 
 add_action( 'admin_init', 'tesseract_handle_package_import' );
+
+function tesseract_load_import_result() {
+	if ( tesseract_is_import_package_page() ) {
+		$result = get_option( 'tesseract_import_result' );
+
+		if ( ! empty( $result ) ) {
+			global $tesseract_import_result;
+			$tesseract_import_result = $result;
+			tesseract_add_success_message( "Success! Imported '{$result['name']}' Package." );
+			delete_option( 'tesseract_import_result' );
+		} else {
+			if ( ! tesseract_is_valid_package_import() ) {
+				wp_redirect( tesseract_get_import_home_url() );
+				exit;
+			}
+		}
+	}
+}
+
+add_action( 'admin_init', 'tesseract_load_import_result' );

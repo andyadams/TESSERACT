@@ -7,7 +7,8 @@
 function tesseract_import_package( $package_array ) {
 	$results = array(
 		'post_ids' => array(),
-		'options' => array()
+		'options' => array(),
+		'name' => $package_array['name']
 	);
 
 	if ( ! empty( $package_array['posts'] ) ) {
@@ -34,7 +35,6 @@ function tesseract_import_package( $package_array ) {
 	// All plugins should have been installed/activated by now.
 	delete_option( 'tesseract_required_plugins' );
 
-	var_dump( $package_array['id'] );
 	update_option( 'tesseract_imported_package_' . intval( $package_array['id'] ), 1 );
 
 	return $results;
