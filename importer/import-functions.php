@@ -36,6 +36,31 @@ function tesseract_import_package( $package_array ) {
 		}
 	}
 
+	if ( ! empty( $package_array['plugin_data'] ) ) {
+		// We don't need to import into any of these (WP default) tables
+		$blacklisted_tables = array(
+			'users', 'usermeta', 'terms', 'term_relationships', 'comments',
+			'commentmeta', 'links', 'term_taxonomy', 'options', 'posts', 'postmeta'
+		);
+
+		global $wpdb;
+
+		// Iterate through all of the custom data and insert/overwrite existing data
+		foreach ( $package_array['plugin_data'] as $unprefixed_table_name => $rows ) {
+			if ( in_array( $unprefixed_table_name, $blacklisted_tables ) ) {
+				continue;
+			}
+
+			$table_name = $wpdb->prefix . $unprefixed_table_name;
+
+			foreach ( $rows as $row ) {
+				// Warning: 'replace' will overwrite existing data, which is required for plugins
+				// that reference the unique ID of a row (e.g. in shortcodes)
+				$wpdb->replace( $table_name, $row );
+			}
+		}
+	}
+
 	// Clear out the option for 'required plugins', because the package has completed importing.
 	// All plugins should have been installed/activated by now.
 	delete_option( 'tesseract_required_plugins' );
