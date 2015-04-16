@@ -18,6 +18,11 @@ function tesseract_import_package( $package_array ) {
 				return $post_id;
 			} else {
 				$results['post_ids'][] = $post_id;
+				if ( ! empty( $post['meta'] ) ) {
+					foreach ( $post['meta'] as $meta_key => $meta_value ) {
+						update_post_meta( $post_id, $meta_key, maybe_unserialize( $meta_value[0] ) );
+					}
+				}
 			}
 		}
 	}

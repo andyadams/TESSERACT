@@ -74,3 +74,22 @@ function tesseract_load_import_result() {
 }
 
 add_action( 'admin_init', 'tesseract_load_import_result' );
+
+function tesseract_refresh_packages() {
+	if ( tesseract_is_an_import_admin_page() && ! empty( $_GET['refresh-packages'] ) ) {
+		delete_transient( 'tesseract_package_list' );
+		$url = add_query_arg( 'refresh-successful', 1, tesseract_get_import_home_url() );
+		wp_redirect( $url );
+		exit;
+	}
+}
+
+add_action( 'init', 'tesseract_refresh_packages' );
+
+function tesseract_load_messages() {
+	if ( tesseract_is_an_import_admin_page() && ! empty( $_GET['refresh-successful'] ) ) {
+		tesseract_add_success_message( "Successfully refreshed the package lists." );
+	}
+}
+
+add_action( 'init', 'tesseract_load_messages' );
