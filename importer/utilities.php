@@ -7,9 +7,11 @@ function tesseract_get_packages() {
 	if ( false === ( $packages = get_transient( 'tesseract_package_list' ) ) ) {
 		$response = wp_remote_get( TESSERACT_PACKAGE_LIST_URL );
 		$content = $response['body'];
+		$loaded_local_file = false;
 
 		if ( false === $content ) {
 			$content = file_get_contents( dirname( __FILE__ ) . '/data/packages.json' );
+			$loaded_local_file = true;
 		}
 
 		if ( empty( $content ) ) {
@@ -19,8 +21,18 @@ function tesseract_get_packages() {
 
 		$data = json_decode( $content, true );
 
+		// One last chance at grabbing the local data
+		if ( NULL === $data && ! $loaded_local_file ) {
+			$content = file_get_contents( dirname( __FILE__ ) . '/data/packages.json' );
+			$loaded_local_file = true;
+
+			if ( ! empty( $content ) ) {
+				$data = json_decode( $content, true );
+			}
+		}
+
 		if ( NULL === $data ) {
-			tesseract_add_error_message( 'There was an error decoding the packages.' );
+			tesseract_add_error_message( 'There was an error loading the packages. Try refreshing the packages using the button at the top of this page.' );
 			return array();
 		}
 
