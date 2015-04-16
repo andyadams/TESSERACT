@@ -23,7 +23,7 @@
 		$package = $packages[$package_id];
 	?>
 
-	<?php if ( empty( $plugins_needing_install ) && empty( $plugins_needing_activation ) ) : ?>
+	<?php if ( ! tesseract_needs_plugins_installed() ) : ?>
 		<h2>Awesome! You've installed all required plugins. Continue with the import?</h2>
 
 		<form action="<?php echo esc_url( tesseract_get_import_package_url() ); ?>" method="post" class="package-form" data-num-pages="<?php echo esc_attr( count( $package['posts'] ) ); ?>">

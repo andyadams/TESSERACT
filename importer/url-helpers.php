@@ -13,14 +13,13 @@ function tesseract_get_plugin_install_url( $package_id ) {
 }
 
 function tesseract_is_import_package_page() {
-	return $_GET['page'] == 'tesseract-importer' && isset( $_REQUEST['import_package'] );
+	return isset( $_GET['page'] ) && $_GET['page'] == 'tesseract-importer' && isset( $_REQUEST['import_package'] );
 }
 
 function tesseract_is_plugin_install_page() {
-	return $_GET['page'] == 'tesseract-importer' && isset( $_REQUEST['importer_plugin_install'] );
+	return isset( $_GET['page'] ) && $_GET['page'] == 'tesseract-importer' && isset( $_REQUEST['importer_plugin_install'] );
 }
 
 function tesseract_is_valid_package_import() {
-	$nonce = $_REQUEST['_wpnonce'];
-	return isset( $_REQUEST['import_package'] ) && wp_verify_nonce( $nonce, 'tesseract_import_package' ) && $_POST['package'];
+	return isset( $_REQUEST['import_package'] ) && isset( $_REQUEST['_wpnonce'] ) && wp_verify_nonce( $_REQUEST['_wpnonce'], 'tesseract_import_package' ) && $_POST['package'];
 }

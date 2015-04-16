@@ -66,13 +66,23 @@ add_action( 'init', 'tesseract_check_plugin_requirements', 2 );
  * Returns true if the TGM class tells us that there are notices
  */
 function tesseract_needs_plugins_installed() {
-	ob_start();
-	$activator = TGM_Plugin_Activation::get_instance();
-	$activator->notices();
-	$messages = ob_get_contents();
-	ob_end_clean();
+	$plugin_table = new TGMPA_List_Table;
+	$plugin_table->prepare_items();
 
-	return ! empty( $messages );
+	$plugins_needing_install = array();
+	$plugins_needing_activation = array();
+
+	$installed_plugins = get_plugins();
+
+	foreach ( $plugin_table->items as $item ) {
+		if ( ! isset( $installed_plugins[$item['file_path']] ) ) {
+			$plugins_needing_install[] = $item;
+		} elseif ( is_plugin_inactive( $item['file_path'] ) ) {
+			$plugins_needing_activation[] = $item;
+		}
+	}
+
+	return ! empty( $plugins_needing_install ) || ! empty( $plugins_needing_activation );
 }
 
 /**
