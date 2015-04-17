@@ -72,6 +72,8 @@ function tesseract_import_package( $package_array ) {
 	delete_option( 'tesseract_required_plugins' );
 	delete_option( 'tesseract_plugin_install_return_url' );
 
+	delete_transient( 'tt_font_theme_options' );
+
 	update_option( 'tesseract_imported_package_' . intval( $package_array['id'] ), 1 );
 
 	return $results;
