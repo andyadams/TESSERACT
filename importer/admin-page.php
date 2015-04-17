@@ -54,7 +54,6 @@ function tesseract_load_import_result() {
 	// Are we on the import package page?
 	if ( tesseract_is_import_package_page() ) {
 		$result = get_option( 'tesseract_import_result' );
-
 		// If so, and we have the results of an import, we set that up for display here.
 		if ( ! empty( $result ) ) {
 			global $tesseract_import_result;
@@ -73,7 +72,8 @@ function tesseract_load_import_result() {
 	}
 }
 
-add_action( 'admin_init', 'tesseract_load_import_result' );
+// Attach to current screen to make sure everything we need is loaded
+add_action( 'current_screen', 'tesseract_load_import_result' );
 
 function tesseract_refresh_packages() {
 	if ( tesseract_is_an_import_admin_page() && ! empty( $_GET['refresh-packages'] ) ) {
